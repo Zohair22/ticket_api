@@ -1,67 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ticket Api
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Assigment Ticket Api Project.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This projects requires the following:
+* PHP 8.3
+* MySQL or MariaDB
+* NGinx or Apache for the PHP (on Mac, I'd recommend using Laravel Valet - https://laravel.com/docs/11.x/valet)
+* Composer
+* Requires activating the following php extensions:
+    * extension=gd - this is required for the qr code generator
+    * extension=sodium - <mark>TO BE ADDED</mark>
+    * extension=zip - <mark>TO BE ADDED</mark>
 
-## Learning Laravel
+#### Installation on mac
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* Install Brew from https://brew.sh/
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+* Install the needed software
+```
+brew install php
+brew install mysql
+```
+* If you want to use laravel valet, use this
+```
+composer global require laravel/valet
+valet install
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### Installation on Windows
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* Install Apache - https://www.apachefriends.org/
 
-## Laravel Sponsors
+### Installing
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+A step by step series of examples that tell you how to get a development env running
+```
+git clone https://github.com/Zohair22/ticket_api.git
+```
 
-### Premium Partners
+Create a database  and user with the details below:
+DB:   dazu_core_local
+User: root
+Pass:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+While in the project root directory, copy the .env.local from the repository and make the file name .env
+```
+cp .env.local .env
+```
+You need to create a database with the username/password you have in the .env file (or modify the .env file accordingly)
 
-## Contributing
+While in the project root directory, run composer install to bring all the project libraries and dependencies (you must be connected to the internet for this)
+```
+composer install
+```
+While in the project root directory, run to add passport supplied keys
+```
+php artisan passport:keys
+```
+While in the project root directory, run to create the database tables
+```
+php artisan migrate
+```
+Install the test data we've created (only use this on local please)
+```
+php artisan db:seed --class=TestSeeder
+```
+While in the project root directory, serve the project
+```
+php artisan serve
+```
+Or If you are installed laravel valet
+```
+valet link
+valet secure
+```
+Now You Can use URL
+```
+https://api_project.test
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Prepared Test Data
 
-## Code of Conduct
+The project has multiple seed files to get the project up and running and looking ok.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+While in the project root directory, run the following seed (which will include populated test data)
+```
+php artisan db:seed 
+```
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# ticket_api
+### Architecture (Laravel)
+Using the following patterns:
+* **Application layer**
+    * **Controllers**
+        - these controllers come from APIs or any other source and use the
+        - Responsible for data organisation and presentation
+    * **Request**
+        - for validation
+* **Service Layer**
+    * Services
+        * All application and business logic goes here
+        * Accessed through interfaces
+        * Shared between different controllers
+    * DTO
+        * Data Transfer Objects
+        * Used to encapsulate data going to and from services - to split from requests
+        * Not always used
+* **Repository Layer**
+    * Repositories
+        * these access the data model and perform operations
+        * Shares how to access and manage data between controllers
+        * Accessed through interfaces
+        * Contains generic methods as well as model specific methods
+        * Abstracts Eloquent to a certain extent out of the controller
+* **Model**
+    * Domain information
+    * Eloquent
