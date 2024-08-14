@@ -13,10 +13,6 @@ This projects requires the following:
 * MySQL or MariaDB
 * NGinx or Apache for the PHP (on Mac, I'd recommend using Laravel Valet - https://laravel.com/docs/11.x/valet)
 * Composer
-* Requires activating the following php extensions:
-    * extension=gd - this is required for the qr code generator
-    * extension=sodium - <mark>TO BE ADDED</mark>
-    * extension=zip - <mark>TO BE ADDED</mark>
 
 #### Installation on mac
 
